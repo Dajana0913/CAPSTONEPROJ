@@ -1,0 +1,81 @@
+---
+title: "DATA INGESTION"
+author: "Dajana Ramirez Andrade"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Loading the the library that I will be using for data ingestion. 
+```{r}
+library(tidyverse)
+library(janitor)
+library(lubridate)
+```
+
+Reading in only the data set that is currently available to me. (From 02/15/2025) 
+```{r}
+tuition_data <- read_csv("Tuition_Assistance_20250215.csv")
+```
+Checking for missing data in my data set.
+```{r}
+colSums(is.na(tuition_data))
+```
+Since there is no missing data I will just mutate the the characters for there to be no whitespace.
+```{r}
+tuition_clean <- tuition_data %>%
+  clean_names() %>%                     
+  mutate(across(where(is.character), str_trim))  
+```
+
+Looking at my cleaned data set to make sure evrything is ready for analysis.
+```{r}
+
+glimpse(tuition_clean)
+summary(tuition_clean)
+
+```
+Everything looks alright and in there place, no inconsistencies. 
+
+
+Making sure some one time courses aren't treated as a degree.
+```{r}
+tuition_clean %>%
+  count(degree) %>%
+  ggplot(aes(x = reorder(degree, -n), y = n, fill = degree)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Number of Schools by Degree Type",
+       x = "Degree Type",
+       y = "Count",
+       fill = "Degree Type") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+Looks like they aren't being treated as a degree.
+
+
+Dashboard: https://public.tableau.com/views/PHASE1_17439510545370/PHASE1DASHBOARD?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+
+I have loaded and cleaned my data set to start working on my analysis, along with that Ive explored my data in tableu and made a dashboard. My findings to the following questions were:
+
+1. Which departments receive the most tuition assistance in dollars?
+
+The police and fire rescue services. 
+
+2. Which majors receive the most tuition assistance?
+
+That would be non-majors such as certificates, along with Business and Criminal Justice.
+
+3. Which schools or universities are most attended by employees? 
+
+University of Maryland and Montgomery College Rockville Campus. 
+
+4. What is the distribution of costs across different degrees (Bachelor’s vs Master’s)?
+
+There is more people completing a bachelors degree (almost 2 times bachelors), but the cost are almost the same, so masters are more expensive. 
+
+5. Do certain departments show strong preferences for specific schools?
+
+Theres no much to this, but it seems that the police and health services lean towards University of Maryland.
+
+
+
