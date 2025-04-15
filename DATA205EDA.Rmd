@@ -1,0 +1,229 @@
+---
+title: "DATA205EDA"
+author: "Dajana Ramirez Andrade"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# EDA of Data Assistance Data Set and Employee Salaries Data Set From Montgomery County
+
+#### Source: <https://data.montgomerycountymd.gov/Education/Tuition-Assistance/p7z5-tjrz/about_data>
+
+#### Source:<https://data.montgomerycountymd.gov/Human-Resources/Employee-Salaries-2024/2nq6-auk8/about_data>
+
+I will be loading the libraries that I will be using:
+
+```{r}
+library (readxl)
+library(dplyr)
+library(tidyverse)
+library(janitor)
+library(lubridate)
+```
+
+## Data Preparation & Cleaning
+
+I will prepare and load the data sets I will be using.
+
+Loading in the Tuition Assistance data set.
+
+```{r}
+tuition <- read_csv("Tuition_Assistance_20250215.csv")
+```
+
+Checking for missing data in the Tuition Assistance data set.
+
+```{r}
+colSums(is.na(tuition))
+```
+
+As we can see that the only variable that has missing data is the Course Description variable, since I will not be using this variable I will leave the data as is, but I will be trimming of/ cutting any white space there might be in the data set.
+
+```{r}
+tuition_clean <- tuition %>%
+  clean_names() %>%                     
+  mutate(across(where(is.character), str_trim))  
+```
+
+Looking at my cleaned data set for Tuition Assistance to make sure everything is ready for analysis.
+
+```{r}
+glimpse(tuition_clean)
+summary(tuition_clean)
+```
+
+Everything looks alright and in the right place, no inconsistencies.
+
+The median for the cost is 700 dollars while the mean is 787 dollars. The min is 0 dollars and the max is 2,300 dollars.
+
+I will now prepare the Employee Salaries data set.
+
+```{r}
+salaries <- read_csv("Employee_Salaries_-_2024_20250414.csv")
+```
+
+Checking for missing data in the Employee Salaries data set.
+
+```{r}
+colSums(is.na(salaries))
+```
+
+As we can see the only variable in this data set that has missing data is the Grade variable, I will also not be using this variable so I will leave it as is, but just as in the Tuition Assistance data set I will trim/cut off the white space.
+
+```{r}
+salaries_clean <- salaries %>%
+  clean_names() %>%                     
+  mutate(across(where(is.character), str_trim))  
+```
+
+Looking at my cleaned data set for Employee Salaries to make sure everything is ready for analysis.
+
+```{r}
+glimpse(salaries_clean)
+summary(salaries_clean)
+```
+
+Everything looks alright and in there place, we can see that the min base salary is 5,947 dollars, while the max is 306,900 dollars. The median is 95,448 dollars while the mean is 98,388 dollars.
+
+I will now make sure that the departments match up.
+
+```{r}
+salaries_clean
+```
+
+```{r}
+unique_depts <- unique(tuition_clean$department)
+print(unique_depts)
+```
+
+Many of my departments did not match up because they had different names such as "Department of Police" and "Police", I used Open refine to fix this. I used the Employees Salaries data set and I used the unique names for the departments in Tuition Assistance.
+
+I will now be loading the new data set for Employee Salaries.
+
+```{r}
+salaries_new <- read_excel("C:/Users/drami/OneDrive/Documents/DATA205/Employee-SalariesOpenRefine.xls")
+
+salaries_new
+```
+
+Removing the Department Variable, because we have another variable named Department Name, which I will be using, but I will rename Department Name to just Department. I will also be trimming the whitespace.
+
+```{r}
+salaries_new <- salaries_new %>%
+  select(-Department) %>%               
+  rename(department = `Department Name`)
+
+names(salaries_new) 
+
+salaries_new_clean <- salaries_new %>%
+  clean_names() %>%                     
+  mutate(across(where(is.character), str_trim))  
+```
+
+Now I will check Again that the data sets have the same department names.
+
+```{r}
+depts_tuition <- unique(tuition_clean$department) 
+depts_salaries <- unique(salaries_new$department) 
+
+
+common_depts <- intersect(depts_tuition, depts_salaries)
+common_depts
+```
+
+As you can see 25 match up, which should be right.
+
+I will now remove the other departments for salaries.
+
+```{r}
+departments_to_keep <- c(
+  "Police", 
+  "Health & Human Services",
+  "Finance",
+  "County Attorney",
+  "Community Use Public Facilities",
+  "Public Information",
+  "State's Attorney",
+  "General Services",
+  "Fire/Rescue Services",
+  "Correction & Rehabilitation",
+  "Transportation",
+  "Housing & Community Affairs",
+  "County Council",
+  "Technology Services",
+  "Environmental Protection",
+  "Human Resources",
+  "Recreation",
+  "County Executive",
+  "Investment Trustees",
+  "Libraries",
+  "Consumer Protection",
+  "Liquor Control",
+  "Animal services",
+  "Permitting Services",
+  "Management & Budget",
+  "Sheriff",
+  "Community Engagement Cluster",
+  "Procurement",
+  "Legislative Oversight",
+  "Human Rights",
+  "Board of Elections",
+  "Office of Racial Equity and Social Justice",
+  "Office of Labor Relations"
+)
+
+
+filtered_salaries <- salaries_new_clean %>%
+  filter(department %in% departments_to_keep)
+
+cat("Unique departments in filtered data:\n")
+print(unique(filtered_salaries$department))
+
+cat("\nOriginal rows:", nrow(salaries_new_clean))
+cat("\nFiltered rows:", nrow(filtered_salaries))
+```
+
+I will now save the filtered-salaries onto my computer to use for making a dashboard.
+
+```{r}
+write.csv(filtered_salaries, "filtered_salaries.csv", row.names = FALSE)
+```
+
+## Dashboards/EDA
+
+I will now make three different dashboards with visualizations using Tableu.
+
+The following dashboards will be:
+
+1.  Tuition Assistance Analysis
+2.  Salary Data Analysis
+3.  Comparative Analysis
+
+### Tuition Assistance Analysis Dashboard:
+
+<https://public.tableau.com/views/TuitionAssistanceAnalysisDashboard/Dashboard1>[?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link](https://public.tableau.com/views/TuitionAssistanceAnalysisDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
+This dashboard answers the following questions:
+
+1.  Which departments receive the most tuition Assistance?
+2.  What are the most common degrees/courses funded?
+3.  How does the assistance amount vary by department?
+
+### Salary Data Analysis Dashboard:
+
+<https://public.tableau.com/views/SalaryDataAnalysisDashboard/Dashboard1>[?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link](https://public.tableau.com/views/SalaryDataAnalysisDashboard/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
+This dashboard answers the following questions:
+
+1.  Which departments have the highest median salaries?
+2.  How do salaries vary by gender?
+3.  Which departments have the highest average overtime pay per employee?
+
+### Comparative Analysis Dashboard:
+
+<https://public.tableau.com/views/ComparativeAnalysisDashboard_17446805346100/Dashboard1>[?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link](https://public.tableau.com/views/ComparativeAnalysisDashboard_17446805346100/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
+This dashboard answers the following questions:
+
+1.  Do higher-salary departments show greater tuition assistance?
+2.  Are there departments where salary and tuition patterns seem mismatched?
