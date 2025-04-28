@@ -24,6 +24,7 @@ Loading in the clean data set:
 
 ```{r}
 filtered_salaries_clean <- read_csv("filtered_salaries_clean.csv")
+tuition_clean <- read_csv ("tuition_clean.csv")
 ```
 
 ## Gender Pay Gap Analysis
@@ -174,3 +175,55 @@ Both departments show male salary advantages greater then 30%.
 Effect sizes exceed typical thresholds for "large" effects.
 
 Patterns suggest systemic rather than isolated issues.
+
+## Calculate Pearson's r between median salary and tuition $ per department
+
+```{r}
+
+# Calculating median salary by department
+median_salaries <- filtered_salaries_clean %>%
+  group_by(department) %>%
+  summarise(median_salary = median(base_salary, na.rm = TRUE))
+
+# Calculating median tuition by department
+median_tuition <- tuition_clean %>%
+  group_by(department) %>%
+  summarise(median_tuition = median(cost, na.rm = TRUE))
+```
+
+```{r}
+# Merging the data
+dept_data <- inner_join(median_salaries, median_tuition, by = "department")
+```
+
+```{r}
+# Calculating Pearson's r
+cor_result <- cor.test(dept_data$median_salary, dept_data$median_tuition, 
+                      method = "pearson")
+
+cat("Pearson's r between median salary and median tuition per department:\n")
+cat("r =", round(cor_result$estimate, 3), "\n")
+cat("95% CI:", round(cor_result$conf.int, 3), "\n") 
+cat("p-value:", format.pval(cor_result$p.value, digits = 3), "\n")
+
+
+if(cor_result$p.value < 0.05) {
+  direction <- ifelse(cor_result$estimate > 0, "positive", "negative")
+  cat("\nInterpretation: Significant", direction, "correlation (p < 0.05)\n")
+  cat("Departments with higher median salaries tend to have", 
+      ifelse(direction == "positive", "higher", "lower"), 
+      "median tuition costs.")
+} else {
+  cat("\nInterpretation: No significant correlation found.")
+
+}
+
+
+plot(dept_data$median_salary, dept_data$median_tuition,
+     xlab = "Median Salary ($)", ylab = "Median Tuition Cost ($)",
+     main = "Department-Level Correlation")
+abline(lm(median_tuition ~ median_salary, data = dept_data), col = "red")
+```
+
+=
+
