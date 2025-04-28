@@ -1,0 +1,176 @@
+---
+title: "ProjectAnalysisDajanaRamirezAndrade"
+author: "Dajana Ramirez Andrade"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Tuition Assistance Data Set and Employee Salaries Data Set From Montgomery County Analysis
+
+#### Source: <https://data.montgomerycountymd.gov/Education/Tuition-Assistance/p7z5-tjrz/about_data>
+
+#### Source:<https://data.montgomerycountymd.gov/Human-Resources/Employee-Salaries-2024/2nq6-auk8/about_data>
+
+Loading in the libraries, that I will be using:
+
+```{r}
+library(dplyr)
+library(tidyverse)
+```
+
+## Gender Pay Gap Analysis
+
+Loading in the clean data set:
+
+```{r}
+filtered_salaries_clean <- read_csv("filtered_salaries_clean.csv")
+```
+
+## Gender Pay Gap Analysis
+
+I will now conduct t-tests to examine gender pay gaps in departments with high disparities (Police and Legislative Oversight).
+
+```{r}
+# Police Department analysis
+police_data <- high_disparity_depts %>%
+  filter(department == "Police")
+
+# Summary statistics
+police_summary <- police_data %>%
+  group_by(gender) %>%
+  summarise(
+    n = n(),
+    mean_salary = mean(base_salary),
+    median_salary = median(base_salary),
+    sd_salary = sd(base_salary)
+  )
+
+cat("\nPolice Department Salary Summary by Gender:\n")
+print(police_summary)
+
+# T-test
+t_test_police <- t.test(base_salary ~ gender, data = police_data)
+
+cat("\n### Police Department Gender Pay Gap T-Test Results\n")
+print(t_test_police)
+
+# Cohen's d
+police_d <- (police_summary$mean_salary[police_summary$gender == "M"] - 
+              police_summary$mean_salary[police_summary$gender == "F"]) /
+            sqrt(((police_summary$sd_salary[police_summary$gender == "F"]^2 * 
+                  (police_summary$n[police_summary$gender == "F"] - 1)) +
+                 (police_summary$sd_salary[police_summary$gender == "M"]^2 * 
+                  (police_summary$n[police_summary$gender == "M"] - 1))) /
+                 (sum(police_summary$n) - 2))
+
+cat("\nEffect Size (Cohen's d):", round(police_d, 3), "\n")
+```
+
+```{r}
+
+# Legislative Oversight analysis
+legislative_data <- high_disparity_depts %>%
+  filter(department == "Legislative Oversight")
+
+# Summary statistics
+legislative_summary <- legislative_data %>%
+  group_by(gender) %>%
+  summarise(
+    n = n(),
+    mean_salary = mean(base_salary),
+    median_salary = median(base_salary),
+    sd_salary = sd(base_salary)
+  )
+
+cat("\nLegislative Oversight Salary Summary by Gender:\n")
+print(legislative_summary)
+
+# T-test
+t_test_legislative <- t.test(base_salary ~ gender, data = legislative_data)
+
+cat("\n### Legislative Oversight Gender Pay Gap T-Test Results\n")
+print(t_test_legislative)
+
+#Cohen's d
+legislative_d <- (legislative_summary$mean_salary[legislative_summary$gender == "M"] - 
+                   legislative_summary$mean_salary[legislative_summary$gender == "F"]) /
+                 sqrt(((legislative_summary$sd_salary[legislative_summary$gender == "F"]^2 * 
+                       (legislative_summary$n[legislative_summary$gender == "F"] - 1)) +
+                      (legislative_summary$sd_salary[legislative_summary$gender == "M"]^2 * 
+                       (legislative_summary$n[legislative_summary$gender == "M"] - 1))) /
+                      (sum(legislative_summary$n) - 2))
+
+cat("\nEffect Size (Cohen's d):", round(legislative_d, 3), "\n")
+```
+
+### Police Department Findings:
+
+#### 1. Statistical Significance
+
+Extremely significant pay gap (t = -14.70, p \< .001).
+
+95% CI [- 30 , 386, − 30,386,−23,231] confirms male salaries are significantly higher.
+
+#### 2. Effect Size
+
+Cohen's d = 0.79 (large effect size)
+
+Interpretation: Male officers earn 0.79 standard deviations more than females.
+
+Practical significance: This represents a substantial, meaningful difference.
+
+#### 3. Salary Comparison
+
+Female mean: \$78,357 (87,499 median).
+
+Male mean: \$105,166 (111,326 median).
+
+Absolute difference: \$26,809 (34.2% higher for males).
+
+### Legislative Oversight Findings
+
+#### 1. Statistical Significance
+
+Marginally non-significant (t = -2.29, p = .067).
+
+95% CI [-95,374,95,374,4,485] includes zero but leans negative.
+
+Small sample size reduces statistical power.
+
+#### 2. Effect Size
+
+Cohen's d = 1.37 (very large effect size).
+
+Interpretation: Male salaries are 1.37 standard deviations higher than females.
+
+Since it's a small sample (10 Females, 4 Males) it makes this estimate less stable.
+
+#### 3. Salary Comparison
+
+Female mean: \$139,196 (131,997.8 median).
+
+Male mean: \$184,640 (194,304.1 median).
+
+Absolute difference: \$45,444 (32.6% higher for males).
+
+### Key Takeaways
+
+#### Police Department
+
+Clear evidence of gender pay disparity.
+
+The difference is both statistically and practically significant.
+
+#### Legislative Oversight
+
+Large point estimate but limited by a small sample.
+
+Potential pay gap warrants monitoring.
+
+### Comparative Insights
+
+Both departments show male salary advantages greater then 30%.
+
+Effect sizes exceed typical thresholds for "large" effects.
+
+Patterns suggest systemic rather than isolated issues.
