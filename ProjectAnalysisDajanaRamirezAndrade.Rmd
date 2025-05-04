@@ -176,7 +176,7 @@ Effect sizes exceed typical thresholds for "large" effects.
 
 Patterns suggest systemic rather than isolated issues.
 
-## Calculate Pearson's r between median salary and tuition $ per department
+## Calculate Pearson's r between median salary and tuition \$ per department
 
 ```{r}
 
@@ -224,6 +224,3 @@ plot(dept_data$median_salary, dept_data$median_tuition,
      main = "Department-Level Correlation")
 abline(lm(median_tuition ~ median_salary, data = dept_data), col = "red")
 ```
-
-=
-
