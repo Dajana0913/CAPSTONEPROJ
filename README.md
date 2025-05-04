@@ -13,7 +13,7 @@ This project analyzes gender pay gaps and tuition assistance patterns in Montgom
 2. How does tuition assistance correlate with departmental median salaries?  
 
 ## Repository Structure  
-- [`data/`](data/): Raw and processed datasets 
+- [`data/`](data): Raw and processed datasets 
 - [`CAPSTONEPROJ/code/`](CAPSTONEPROJ/code/): Cleaning, EDA, and analysis scripts  
 - [`CAPSTONEPROJ/dashboard/`](CAPSTONEPROJ/dashboard/): Dashboards
 - [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/): Final Written Report
