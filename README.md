@@ -22,7 +22,7 @@ This project analyzes gender pay gaps and tuition assistance patterns in Montgom
 ## How to Reproduce  
 1. Clone this repository.  
 2. Run scripts in order:  
-   - [`CAPSTONEPROJ/code/DATA205EDA&CLEANING.Rmd`](CAPSTONEPROJ/code/DATA205EDA&CLEANING.Rmd)
+   - code/DATA205EDA&CLEANING.Rmd
    - [`CAPSTONEPROJ/code/ProjectAnalysisDajanaRamirezAndrade.Rmd`](CAPSTONEPROJ/code/ProjectAnalysisDajanaRamirezAndrade.Rmd)
    - [`CAPSTONEPROJ/code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd`](CAPSTONEPROJ/code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd)
 3. View final report in  [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/)
