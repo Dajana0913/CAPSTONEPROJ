@@ -16,15 +16,15 @@ This project analyzes gender pay gaps and tuition assistance patterns in Montgom
 - [`CAPSTONEPROJ/data/`](CAPSTONEPROJ/data/): Raw and processed datasets  
 - [`CAPSTONEPROJ/code/`](CAPSTONEPROJ/code/): Cleaning, EDA, and analysis scripts  
 - [`CAPSTONEPROJ/dashboard/`](CAPSTONEPROJ/dashboard/): Dashboards
-- [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/):Final Written Report
+- [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/): Final Written Report
 - [`CAPSTONEPROJ/presentation/`](CAPSTONEPROJ/presentation/): Final Presentation
 
 ## How to Reproduce  
 1. Clone this repository.  
 2. Run scripts in order:  
-   Rscript -e "rmarkdown::render('./code/DATA205EDA&CLEANING.Rmd')"
-   Rscript -e "rmarkdown::render('./code/ProjectAnalysisDajanaRamirezAndrade.Rmd')"
-   Rscript -e "rmarkdown::render('./code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd')"
+   - [`CAPSTONEPROJ/code/DATA205EDA&CLEANING.Rmd`](CAPSTONEPROJ/code/DATA205EDA&CLEANING.Rmd)
+   - [`CAPSTONEPROJ/code/ProjectAnalysisDajanaRamirezAndrade.Rmd`](CAPSTONEPROJ/code/ProjectAnalysisDajanaRamirezAndrade.Rmd)
+   -[`CAPSTONEPROJ/code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd`](CAPSTONEPROJ/code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd)
 3. View final report in  [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/)
 
 ## Dashboards  
