@@ -13,18 +13,18 @@ This project analyzes gender pay gaps and tuition assistance patterns in Montgom
 2. How does tuition assistance correlate with departmental median salaries?  
 
 ## Repository Structure  
-- [`data/`](data): Raw and processed datasets 
-- [`CAPSTONEPROJ/code/`](CAPSTONEPROJ/code/): Cleaning, EDA, and analysis scripts  
-- [`CAPSTONEPROJ/dashboard/`](CAPSTONEPROJ/dashboard/): Dashboards
-- [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/): Final Written Report
-- [`CAPSTONEPROJ/presentation/`](CAPSTONEPROJ/presentation/): Final Presentation
+- [`data/`](data/): Raw and processed datasets 
+- [`code/`](code/): Cleaning, EDA, and analysis scripts  
+- [`dashboard/`](dashboard/): Dashboards  
+- [`final_report/`](final_report/): Final Written Report  
+- [`presentation/`](presentation/): Final Presentation  
 
 ## How to Reproduce  
 1. Clone this repository.  
 2. Run scripts in order:  
-   - code/DATA205EDA&CLEANING.Rmd
-   - [`CAPSTONEPROJ/code/ProjectAnalysisDajanaRamirezAndrade.Rmd`](CAPSTONEPROJ/code/ProjectAnalysisDajanaRamirezAndrade.Rmd)
-   - [`CAPSTONEPROJ/code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd`](CAPSTONEPROJ/code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd)
+   - [`code/DATA205EDA&CLEANING.Rmd`](code/DATA205EDA&CLEANING.Rmd)  
+   - [`code/ProjectAnalysisDajanaRamirezAndrade.Rmd`](code/ProjectAnalysisDajanaRamirezAndrade.Rmd)  
+   - [`code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd`](code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd)  
 3. View final report in  [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/)
 
 ## Dashboards  
