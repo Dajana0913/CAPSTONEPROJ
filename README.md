@@ -25,8 +25,7 @@ This project analyzes gender pay gaps and tuition assistance patterns in Montgom
    - [`code/DATA205EDA&CLEANING.Rmd`](code/DATA205EDA&CLEANING.Rmd)  
    - [`code/ProjectAnalysisDajanaRamirezAndrade.Rmd`](code/ProjectAnalysisDajanaRamirezAndrade.Rmd)  
    - [`code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd`](code/FinalProjectAnalysisDajanaRamirezAndrade.Rmd)  
-3. View final report in  [`CAPSTONEPROJ/final_report/`](CAPSTONEPROJ/final_report/)
-
+3. View final report in  [`final_report/`](final_report/)
 ## Dashboards  
 - https://public.tableau.com/views/TuitionAssistanceAnalysisDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 - https://public.tableau.com/views/SalaryDataAnalysisDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
