@@ -170,7 +170,7 @@ Potential pay gap warrants monitoring.
 
 ### Comparative Insights
 
-Both departments show male salary advantages greater then 30%.
+Both departments show male salary advantages greater than 30%.
 
 Effect sizes exceed typical thresholds for "large" effects.
 
@@ -224,3 +224,5 @@ plot(dept_data$median_salary, dept_data$median_tuition,
      main = "Department-Level Correlation")
 abline(lm(median_tuition ~ median_salary, data = dept_data), col = "red")
 ```
+
+Pearson's r between median salary and median tuition per department: r = -0.09 95% CI: -0.461 0.308 p-value: 0.663 Interpretation: No significant correlation found.

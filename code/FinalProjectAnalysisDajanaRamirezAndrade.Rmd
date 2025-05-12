@@ -113,7 +113,13 @@ pwr.t.test(
 
 **Effect Size:**
 
-Cohen's d = -1.37 (Very Large) Cohen's d indicates that males earn 1.37 standard deviations more than females Equivalent to females at the 8th percentile of male salary distribution
+Cohen's d = -1.37 (Very Large) Cohen's d indicates that males earn 1.37 standard deviations more than females Equivalent to females at the 8th percentile of the male salary distribution
+
+```{r}
+lifetime_loss2 <- (45444) * 20  # 20-year career
+lifetime_loss2
+```
+**Lifetime Impact:** \~\$908880 over 20 years
 
 **Recommended Actions Data Collection:** Track until n ≥ 15 per group
 
@@ -134,9 +140,9 @@ dept_data %>%
 
 **Inverse Relationship Emerges**
 
-**Highest Median Salary:** Community Engagement Cluster (\$67,893 salary)
+**Highest Median Salary:** Legislative Oversight (\$149,888 salary)
 
-**Lowest Median Salary:** Legislative Oversight (\$149,888 salary)
+**Lowest Median Salary:** Community Engagement Cluster (\$67,893 salary)
 
 **Potential driver**: Elected officials pursuing advanced degrees
 
@@ -144,13 +150,11 @@ dept_data %>%
 
 R² = -0.09 (p = 0.663 ) confirms no systemic bias
 
-
 ```{r}
 top_depts <- dept_data %>%
   arrange(desc(median_tuition)) %>%
   slice(1:10)
 ```
-
 
 ```{r}
 ggplot(top_depts, aes(median_salary/1000, median_tuition)) +
@@ -171,7 +175,7 @@ ggplot(top_depts, aes(median_salary/1000, median_tuition)) +
   ) +
   labs(
     title = "Tuition Allocation Relative to Department Salaries",
-    subtitle = "No significant correlation (r = -0.14, p = 0.51)",
+    subtitle = "No significant correlation (r = -0.09, p = 0.663)",
     x = "Median Department Salary", 
     y = "Median Tuition Assistance ($)"
   ) +
